@@ -1,0 +1,285 @@
+
+<div class="page-header">
+    <!-- MultiStep Form -->
+
+         <div class="row">
+            <div class="col-xs-12">
+                <form id="msform" [formGroup]="actionUserForm">
+                    <!-- fieldsets -->
+                    <fieldset>
+                        <div class="progressbar-div" *ngIf="!contactForm" >
+                            <ul id="progressbar">
+                                <!-- <li class="active" style="font-size: 15px !important">Property info</li>
+                                <li class="non-active" style="font-size: 15px !important">Sales and loan amount</li>
+                                <li class="non-active" style="font-size: 15px !important">Your offers</li> -->
+                                <li class="active" style="font-size: 15px !important"></li>
+                                <li class="non-active" style="font-size: 15px !important"></li>
+                                <li class="non-active" style="font-size: 15px !important"></li>
+                                <li class="non-active" style="font-size: 15px !important"></li>
+                            </ul>
+                        </div>
+                        <h2 class="fs-title">Compare Title Quotes Free</h2>
+                        <div class="select-form" style="padding-top: 6vh">
+                            <input type="button" name="next" class="next action-button" (click)="setType('Purchase')" value="Purchase" />
+                            <input type="button" name="next" class="next action-button" (click)="setType('Refinance')" value="Refinance" />
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="progressbar-div" *ngIf="!contactForm" >
+                            <ul id="progressbar">
+                                <!-- <li class="active" style="font-size: 15px !important">Property info</li>
+                                <li class="non-active" style="font-size: 15px !important">Sales and loan amount</li>
+                                <li class="non-active" style="font-size: 15px !important">Your offers</li> -->
+                                <li class="actived" style="font-size: 15px !important"></li>
+                                <li class="active" style="font-size: 15px !important"></li>
+                                <li class="non-active" style="font-size: 15px !important"></li>
+                                <li class="non-active" style="font-size: 15px !important"></li>
+                            </ul>
+                        </div>
+                        <h2 class="fs-title">What is the property address?</h2>
+                        <div class="select-form" style="padding-top: 10vh">
+                            <div class="form-group" [ngClass]="{'has-error': isControlInvalid('address')}">
+                                <input type="text" formControlName="address" id="loanAmount" placeholder="Address*"/>
+                                <div class="error-msg" *ngIf="isControlInvalid('address')">This field is required</div>
+                            </div>
+
+                            <div class="form-group" [ngClass]="{'has-error': isControlInvalid('city')}">
+                                    <input type="text" formControlName="city" id="loanAmount" placeholder="City*"/>
+                                    <div class="error-msg" *ngIf="isControlInvalid('city')">This field is required</div>
+                                </div>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group" [ngClass]="{'has-error': isControlInvalid('zip')}">
+                                             <input type="text" formControlName="zip" id="price" placeholder="Zip Code*"/>
+                                            <div class="error-msg" *ngIf="isControlInvalid('zip')">This field is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <select formControlName="state" id="state" class="form-control custom-form" placeholder="State" style="margin-top: 0px; margin-left: 1%;">
+                                                <option disabled [value]="states[0]">{{states[0]}}</option>
+                                                <option [value]="states[1]">{{states[1]}}</option>
+                                                <option [value]="states[2]">{{states[2]}}</option>
+                                            </select>
+                                            <div class="error-msg">This field is required</div>
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+
+
+
+                            <input type="button" name="previous" class="previous action-button-previous" value="Back"/>
+                            <input
+                                    type="button"
+                                    name="next"
+                                    class="next action-button"
+                                    (click)="calculateTotals()"
+                                    [disabled]="isControlInvalid('address') || isControlInvalid('zip') ||
+                                    isControlInvalid('state') || actionUserForm.get('address').hasError('required') ||
+                                    actionUserForm.get('zip').hasError('required') || isInvalidState()" value="Next"/>
+                        </div>
+                    </fieldset>
+
+
+                    <fieldset id="highForm">
+                        <div class="progressbar-div" *ngIf="!contactForm">
+                            <ul id="progressbar">
+                                <!-- <li class="activated">Property info</li>
+                                <li class="active">Sales and loan amount</li>
+                                <li class="non-active">Your offers</li> -->
+
+                                <li class="activated"></li>
+                                <li class="activated"></li>
+                                <li class="active"></li>
+                                <li class="non-active" style="font-size: 15px !important"></li>
+                            </ul>
+                        </div>
+                        <h2 class="fs-title">What is the sale price, loan amount and jurisdiction?</h2>
+                        <div class="select-form" style="padding-top: 0.5vh;">
+                            <h3 class="fs-subtitle d-none d-sm-block">Property you are buying, selling or refinancing:</h3>
+                            <div class="form-group" [ngClass]="{'has-error': isControlInvalid('price')}">
+                                <input type="text" formControlName="price" id="price" placeholder="Purchase Price*"/>
+                                <div class="error-msg" *ngIf="isControlInvalid('price')">This field is required</div>
+                            </div>
+                            <div class="form-group" [ngClass]="{'has-error': isControlInvalid('loanAmount')}">
+                                <input type="text" formControlName="loanAmount" id="loanAmount" placeholder="Loan Amount*"/>
+                                <div class="error-msg" *ngIf="isControlInvalid('loanAmount')">This field is required</div>
+                            </div>
+                            
+                            <input type="button" name="previous" class="previous action-button-previous" value="Back"/>
+                            <input
+                                    type="button"
+                                    name="next"
+                                    class="next action-button"
+                                    (click)="calculateTotals()"
+                                    [disabled]="isControlInvalid('price') || isControlInvalid('loanAmount') || actionUserForm.get('price').hasError('required') ||
+                                    actionUserForm.get('loanAmount').hasError('required') " value="Next"/>
+                        </div>
+                    </fieldset>
+                    <fieldset *ngIf="!contactForm">
+                        <div class="progressbar-div" *ngIf="!contactForm">
+                            <ul id="progressbar">
+                                <!-- <li class="activated">Property info</li>
+                                <li class="activated">Sales and loan amount</li>
+                                <li class="active">Your offers</li> -->
+                                <li class="activated"></li>
+                                <li class="activated"></li>
+                                <li class="activated"></li>
+                                <li class="active" style="font-size: 15px !important"></li>
+                            </ul>
+                        </div>
+                        <h2 class="fs-title">Here are your offers</h2>
+                        <div class="result-form" style="padding-top: 8vh;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table">
+                                            <tbody>
+                                            <!-- content block -->
+                                            <tr *ngFor="let company of accounts; let i = index"
+                                                (click)="selectCompany(company)">
+                                                <th class="hidden-xs align-middle">
+                                                    <div class="hidden-xs hidden-sm card-avatar d-none d-md-block">
+                                                        <a *ngIf="company.data"><img [src]="company.data.image ? company.data.image : 'assets/img/default-user.png'" alt="..."></a>
+                                                    </div>
+                                                </th>
+                                                <td style="padding-top: 2em;">{{company.title || ''}}<br>
+                                                    <star-rating-comp class="hidden-xs" [starType]="'svg'" [readOnly]="true" [rating]="company.rating"></star-rating-comp>
+                                                    <a class="hidden-xs" *ngIf="company.website"  href="{{company.website}}" target="_blank">{{company.website}}</a>
+                                                    <a class="hidden-xs" *ngIf="!company.website" href="#">Website</a>
+                                                </td>
+                                                <td class="align-middle" style="font-weight: 900; font-size: 1.6em;" >
+                                                    <div style="height: 100%; width: 100%" [ngbPopover]="popContent"  triggers="mouseenter:mouseleave" popoverTitle="Price details" placement="left">
+                                                    <ng-template #popContent>
+                                                     Title Insurance: ${{company.totalInfo?.title_insurance}} <br>
+                                                    Title Company Fees: ${{company.totalInfo?.companyFee}}<br>
+                                                    Government Fees : ${{company.totalInfo?.government_fee}}<br></ng-template>
+                                                    {{company.total_price | currency:'USD':'symbol' || ''}}
+                                                </div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="form-check">
+                                                        
+                                                        <label class="form-check-label">
+                                                            <input type="button" name="next" class="action-button d-sm-block" value="Contact"
+                                                                   />
+                                                            <i class="fa fa-phone fa-3x  fa-color d-block d-sm-none"></i>
+                                                        </label>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!--
+                        <input type="button" name="previous" class="previous action-button-previous" value="Back"/>
+                        <input type="button" name="next" class="next action-button" value="Get Contacts"/>
+                        -->
+                    </fieldset>
+                    <div id="contactForm" *ngIf="contactForm" [@contact]>
+                        <div class="fs-title">
+                                <h2 class="fs-title" style="padding-top: 0px; padding-bottom: 0px; font-size: 1.1em">Contact Information</h2>
+                        </div>
+
+                        <div class="container" style="margin-top: 15px; margin-bottom: 15px">
+                                <div class="row">
+                                        <div class="col-1">
+                                            </div>
+
+                                  <div class="col-4" style="max-width: 28%;">
+                                        <div class="hidden-xs hidden-sm card-avatar d-none d-md-block center">
+                                                <a href="#avatar" *ngIf="selectedCompany.data"><img [src]="selectedCompany.data.image ? selectedCompany.data.image : 'assets/img/default-user.png'" alt="..."></a>
+                                            </div>
+                                  </div>
+                                  <div class="col-3">
+                                        <a style="font-size: 1.5em;" href="{{selectedCompany.website}}">{{selectedCompany.title || ''}} </a><br>
+                                        <star-rating-comp class="hidden-xs" [starType]="'svg'" [readOnly]="true" [rating]="selectedCompany.rating"></star-rating-comp>
+                                        <!-- <a class="hidden-xs" *ngIf="selectedCompany.website"  href="{{selectedCompany.website}}" target="_blank">{{selectedCompany.website}}</a> -->
+                                        <!-- <a class="hidden-xs" *ngIf="!selectedCompany.website" href="#">Website</a> -->
+                                        <a href="tel:{{selectedCompany.phone}}" >{{selectedCompany.phone || ''}}</a>
+                                  </div>
+                                  <div class="col-2" style="font-weight: 900;
+                                  font-size: 1.6em; display: flex; align-items: center;">
+                                        {{selectedCompany.total_price | currency:'USD':'symbol' || ''}}
+                                  </div>
+                                  <div class="col-2"></div>
+                                </div>
+                              </div>
+
+                        <!-- <table class="table">
+                            <tbody>
+
+                            <tr>
+                                <th class="hidden-xs align-middle">
+                                    <div class="hidden-xs hidden-sm card-avatar d-none d-md-block center">
+                                        <a href="#avatar" *ngIf="selectedCompany.data"><img [src]="selectedCompany.data.image ? selectedCompany.data.image : 'assets/img/default-user.png'" alt="..."></a>
+                                    </div>
+                                </th>
+                                <td ><a style="font-size: 1.5em;" href="{{selectedCompany.website}}">{{selectedCompany.title || ''}} </a><br>
+                                    <star-rating-comp class="hidden-xs" [starType]="'svg'" [readOnly]="true" [rating]="selectedCompany.rating"></star-rating-comp>
+                                    <a href="tel:{{selectedCompany.phone}}">{{selectedCompany.phone || ''}}</a>
+                                </td>
+                                <td class="align-middle" style="font-weight: 900; font-size: 1.6em;">{{selectedCompany.total_price | currency:'USD':'symbol' || ''}}</td>
+                                
+                            </tr>
+                            </tbody>
+                        </table> -->
+                        <div class="col-md-12">
+                            <h3 class="fs-subtitle" style=" margin-top: 0% !important">Tell us more about you</h3>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <div class="form-group" [ngClass]="{'has-error': isControlInvalid('firstName')}">
+                                    <input style="width: 115% !important;" formControlName="firstName" id="firstName" type="text" placeholder="First Name*"/>
+                                    <div class="error-msg">This field is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-md-push-1">
+                                <div class="form-group" [ngClass]="{'has-error': isControlInvalid('lastName')}" >
+                                    <input   formControlName="lastName" id="lastName" type="text" placeholder="Last Name*" style="width: 115% !important;"/>
+                                    <div class="error-msg">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <div class="form-group" [ngClass]="{'has-error': isControlInvalid('email')}">
+                                    <input style="width: 115%;" formControlName="email" id="email" type="text" placeholder="Email"/>
+                                    <div class="error-msg">This field is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-md-push-1">
+                                <div class="form-group" [ngClass]="{'has-error': isControlInvalid('phone')}">
+                                    <input style="width: 115%;" formControlName="phone" id="phone" type="text" placeholder="Phone*"/>
+                                    <div class="error-msg">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="button"
+                               name="next"
+                               class="action-button"
+                               value="Get In Touch"
+                               (click)="send()"
+                               [disabled]="actionUserForm.get('firstName').hasError('required') ||
+                                actionUserForm.get('lastName').hasError('required') ||
+                                actionUserForm.get('email').hasError('required') ||
+                                actionUserForm.get('phone').hasError('required')"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+
+  
+
+
