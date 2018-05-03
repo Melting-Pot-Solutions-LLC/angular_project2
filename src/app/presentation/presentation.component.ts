@@ -48,6 +48,8 @@ export class PresentationComponent implements OnInit {
     actionUserForm: FormGroup;
     // Changed by emiev@outlook.com
     selectedCompanyTitle: string;
+    selectedCompanyZip: string;
+    selectedCompanyCity: string;
     selectedCompanyWebsite: string;
     selectedCompanyPhone: string;
     selectedCompanyAddress: string;
@@ -143,9 +145,8 @@ export class PresentationComponent implements OnInit {
             price: [null, [Validators.required]],
             loanAmount: [null, [Validators.required]],
             zip: [null, [Validators.required]],
-            country: [this.countries[0], [Validators.required]],
             state: [this.states[0], [Validators.required]],
-            city: [this.cities[0], [Validators.required]],
+            city: ['', [Validators.required]],
             firstName: ['', [Validators.required]],
             lastName: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
@@ -181,11 +182,12 @@ export class PresentationComponent implements OnInit {
     selectCompany(company) {
         this.selectedCompany = company;
         this.selectedCompanyEmail = company.email;
-        console.log(company);
         this.selectedCompanyTitle = company.title;
         this.selectedCompanyWebsite = company.website;
         this.selectedCompanyPhone = company.phone;
         this.selectedCompanyAddress = company.address;
+        this.selectedCompanyZip = company.zip;
+        this.selectedCompanyCity = company.city;
         this.open();
     }
 
@@ -221,10 +223,11 @@ export class PresentationComponent implements OnInit {
         let adminEmailData = {};
         adminEmailData['merge_purchaseprice'] = this.actionUserForm.get('price').value;
         adminEmailData['merge_loanamount'] = this.actionUserForm.get('loanAmount').value;
-        // adminEmailData['merge_zip'] = this.actionUserForm.get('zip').value;
+        adminEmailData['merge_zip'] = this.actionUserForm.get('zip').value;
+        adminEmailData['merge_address'] = this.actionUserForm.get('address').value;
         // adminEmailData['merge_country'] = this.actionUserForm.get('country').value;
         adminEmailData['merge_state'] = this.actionUserForm.get('state').value;
-        // adminEmailData['merge_city'] = this.actionUserForm.get('city').value;
+        adminEmailData['merge_city'] = this.actionUserForm.get('city').value;
         adminEmailData['merge_fname'] = this.actionUserForm.get('firstName').value;
         adminEmailData['merge_lname'] = this.actionUserForm.get('lastName').value;
         adminEmailData['merge_useremail'] = this.actionUserForm.get('email').value;
