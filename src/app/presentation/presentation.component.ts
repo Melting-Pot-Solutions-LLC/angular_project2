@@ -55,9 +55,9 @@ export class PresentationComponent implements OnInit {
     selectedCompanyAddress: string;
     selectedCompany;
 
-    countries = ['County*', 'Richland', 'Greenville', 'Charleston'];
+    // countries = ['County*', 'Richland', 'Greenville', 'Charleston'];
     states = ['State*', 'DC', 'VA'];
-    cities = ['City*', 'Columbia', 'Greenville', 'Washington'];
+    // cities = ['City*', 'Columbia', 'Greenville', 'Washington'];
 
     constructor(private db: AngularFireDatabase,
                 private _alert: AlertsService,
